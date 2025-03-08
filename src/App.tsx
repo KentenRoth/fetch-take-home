@@ -1,9 +1,20 @@
 import './sass/app.sass'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+// Pages
+import { Login } from './Pages/Login'
+import { Main } from './Pages/Main'
+
 function App() {
 
   return (
     <>
-     <h1>Initial</h1>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+    </BrowserRouter>
     </>
   )
 }
