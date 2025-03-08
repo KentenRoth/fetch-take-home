@@ -24,7 +24,6 @@ export const Main = () => {
 
   return (
     <>
-      <h1>Main</h1>
       <div>
         <h2>Selected Breeds</h2>
         <ul>

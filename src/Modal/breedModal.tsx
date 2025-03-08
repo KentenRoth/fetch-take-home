@@ -28,6 +28,8 @@ export const BreedModal = (props: IProps) => {
         <button onClick={show}>Close</button>
         <form onSubmit={onSubmit}>
           <Select
+            className="react-select-container"
+            classNamePrefix={"react-select"}
             isMulti
             isSearchable
             options={breed.map((breed) => ({ value: breed, label: breed }))}
