@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
-import axios from "../axios/axios";
+import { useState } from "react";
 import { BreedModal } from "../Modal/breedModal";
+import { Puppies } from "../Components/Puppies/Puppies";
+import { useBreeds } from "../hooks/useBreeds";
+import { usePuppies } from "../hooks/usePuppies";
 
 export const Main = () => {
-  const [breeds, setBreeds] = useState<string[]>([]);
+  const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(true);
-
-  useEffect(() => {
-    axios.get("/dogs/breeds").then((res) => {
-      setBreeds(res.data);
-    });
-  }, []);
+  const {
+    puppies,
+    loading: puppiesLoading,
+    error: puppiesError,
+  } = usePuppies(selectedBreeds);
 
   const handleShowModal = () => {
     setShowModal(!showModal);
@@ -41,6 +42,11 @@ export const Main = () => {
             onSelectBreeds={handleSelectBreeds}
             selectedBreeds={selectedBreeds}
           />
+        )}
+        {selectedBreeds.length > 0 ? (
+          <Puppies pups={puppies} />
+        ) : (
+          <h2>Please select your favorite breeds</h2>
         )}
       </div>
     </>
