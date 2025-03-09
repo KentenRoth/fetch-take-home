@@ -15,15 +15,17 @@ export const Puppies = (props: IProps) => {
 
   return (
     <>
-      <h1>Puppies Grid</h1>
       <PaginationBar />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
-      <div className="puppies-grid">
-        {puppiesInfo.map((puppy, index) => (
-          <PuppiesCard key={index} puppy={puppy} />
-        ))}
+      <div className="wrapper">
+        <div className="puppies-grid">
+          {puppiesInfo.map((puppy, index) => (
+            <PuppiesCard key={index} puppy={puppy} />
+          ))}
+        </div>
       </div>
+
       <PaginationBar />
     </>
   );

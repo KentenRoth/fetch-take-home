@@ -3,6 +3,7 @@ import { BreedModal } from "../Modal/breedModal";
 import { Puppies } from "../Components/Puppies/Puppies";
 import { useBreeds } from "../hooks/useBreeds";
 import { usePuppies } from "../hooks/usePuppies";
+import { BreedsList } from "../Components/BreedsList";
 
 export const Main = () => {
   const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
@@ -22,6 +23,10 @@ export const Main = () => {
     setSelectedBreeds(breed);
   };
 
+  const removeBreed = (breed: string) => {
+    setSelectedBreeds(selectedBreeds.filter((b) => b !== breed));
+  };
+
   useEffect(() => {
     if (showModal) {
       document.body.classList.add("no-scroll");
@@ -33,15 +38,18 @@ export const Main = () => {
   return (
     <>
       <div className="main">
-        <h2>Selected Breeds</h2>
-        <ul>
-          {selectedBreeds.map((breed, index) => (
-            <li key={index}>{breed}</li>
-          ))}
-        </ul>
-        <div>
-          <button onClick={handleShowModal}>Show</button>
+        <div className="main_wrapper">
+          <div className="main_heading">
+            <div className="main_heading__header">
+              <h1>Find Your Perfect Puppy</h1>
+              <button onClick={handleShowModal}>Search Breeds</button>
+            </div>
+            <div className="main_heading__breeds">
+              <BreedsList breeds={selectedBreeds} removeBreed={removeBreed} />
+            </div>
+          </div>
         </div>
+        <div className="main_heading"></div>
         {showModal && (
           <BreedModal
             show={handleShowModal}
@@ -53,7 +61,9 @@ export const Main = () => {
         {selectedBreeds.length > 0 ? (
           <Puppies pups={puppies} />
         ) : (
-          <h2>Please select your favorite breeds</h2>
+          <div className="wrapper">
+            <h2>Please select your favorite breeds</h2>
+          </div>
         )}
       </div>
     </>

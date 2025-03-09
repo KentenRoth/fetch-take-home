@@ -1,0 +1,23 @@
+@use '../abstracts/all' as *
+
+.breeds-list
+    &_heading
+        padding-bottom: 10px
+    ul
+        display: flex
+        flex-wrap: wrap
+        gap: 30px
+        align-items: center
+        list-style-type: none
+        padding: 0
+        li
+            background: $light-gray
+            padding: 5px 20px
+            padding-right: 10px
+            border-radius: 5px
+            .breeds-list_button
+                font-size: 14px
+                padding: 5px
+                color: $accent
+                background: transparent
+                margin-left: 10px
