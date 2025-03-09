@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "../axios/axios";
 
-export const PaginationBar = () => {
+interface IProps {
+  next: () => void;
+  prev: () => void;
+}
+
+export const PaginationBar = (props: IProps) => {
   return (
     <>
       <div className="pagination-bar">
@@ -9,8 +14,8 @@ export const PaginationBar = () => {
           <div className="pagination-bar_filter">
             <button>Filter</button>
           </div>
-          <button>Prev</button>
-          <button>Next</button>
+          <button onClick={props.prev}>Prev</button>
+          <button onClick={props.next}>Next</button>
         </div>
       </div>
     </>

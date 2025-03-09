@@ -11,6 +11,8 @@ export const Main = () => {
   const [showModal, setShowModal] = useState(true);
   const {
     puppies,
+    nextPage,
+    prevPage,
     loading: puppiesLoading,
     error: puppiesError,
   } = usePuppies(selectedBreeds);
@@ -59,7 +61,7 @@ export const Main = () => {
           />
         )}
         {selectedBreeds.length > 0 ? (
-          <Puppies pups={puppies} />
+          <Puppies pups={puppies} prev={prevPage} next={nextPage} />
         ) : (
           <div className="wrapper">
             <h2>Please select your favorite breeds</h2>

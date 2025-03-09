@@ -4,6 +4,8 @@ import { PuppiesCard } from "./PuppiesCard";
 
 interface IProps {
   pups: string[];
+  prev: () => void;
+  next: () => void;
 }
 
 export const Puppies = (props: IProps) => {
@@ -15,7 +17,7 @@ export const Puppies = (props: IProps) => {
 
   return (
     <>
-      <PaginationBar />
+      <PaginationBar prev={props.prev} next={props.next} />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
       <div className="wrapper">
@@ -25,8 +27,7 @@ export const Puppies = (props: IProps) => {
           ))}
         </div>
       </div>
-
-      <PaginationBar />
+      <PaginationBar prev={props.prev} next={props.next} />
     </>
   );
 };
