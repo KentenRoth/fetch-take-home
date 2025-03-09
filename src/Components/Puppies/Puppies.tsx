@@ -7,10 +7,14 @@ interface IProps {
   pups: string[];
   prev: () => void;
   next: () => void;
-  filters: (filters: { minAge: number; maxAge: number; sort: string }) => void;
+  filters: (filters: {
+    minAge: number | undefined;
+    maxAge: number | undefined;
+    sort: string;
+  }) => void;
   currentFilters: {
-    minAge: number;
-    maxAge: number;
+    minAge: number | undefined;
+    maxAge: number | undefined;
     sort: string;
   };
 }
@@ -30,6 +34,7 @@ export const Puppies = (props: IProps) => {
   } = usePuppiesInfo(puppyIds);
 
   const favoritesList = (puppy: string) => {
+    console.log(favorites);
     if (favorites.includes(puppy)) {
       setFavorites(favorites.filter((fav) => fav !== puppy));
     } else {
@@ -50,9 +55,9 @@ export const Puppies = (props: IProps) => {
         favorite={handleFavorite}
         currentFilters={{ showFavorites, minAge, maxAge, sort }}
       />
-      {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
-      {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
       <div className="wrapper">
+        {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
+        {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
         <div className="puppies-grid">
           {puppiesInfo.map((puppy, index) => (
             <PuppiesCard

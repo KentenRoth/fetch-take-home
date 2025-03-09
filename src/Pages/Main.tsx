@@ -9,13 +9,13 @@ export const Main = () => {
   const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(true);
-  const [minAge, setMinAge] = useState<number>();
-  const [maxAge, setMaxAge] = useState<number>();
-  const [sort, setSort] = useState<string>("");
+  const [minAge, setMinAge] = useState<number | undefined>();
+  const [maxAge, setMaxAge] = useState<number | undefined>();
+  const [sort, setSort] = useState<string>("breed:asc");
 
   const handleApplyFilters = (filters: {
-    minAge: number;
-    maxAge: number;
+    minAge: number | undefined;
+    maxAge: number | undefined;
     sort: string;
   }) => {
     setMinAge(filters.minAge);

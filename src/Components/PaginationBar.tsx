@@ -6,14 +6,14 @@ interface IProps {
   prev: () => void;
   filters: (filters: {
     showFavorites: boolean;
-    minAge: number;
-    maxAge: number;
+    minAge: number | undefined;
+    maxAge: number | undefined;
     sort: string;
   }) => void;
   currentFilters: {
     showFavorites: boolean;
-    minAge: number;
-    maxAge: number;
+    minAge: number | undefined;
+    maxAge: number | undefined;
     sort: string;
   };
   favorite: (filters: { showFavorites: boolean }) => void;
