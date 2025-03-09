@@ -11,6 +11,8 @@ interface IProps {
 
 export const Puppies = (props: IProps) => {
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
+
   const {
     puppiesInfo,
     loading: puppiesInfoLoading,
@@ -25,14 +27,26 @@ export const Puppies = (props: IProps) => {
     }
   };
 
+  const handleApplyFilters = (filters: { showFavorites: boolean }) => {
+    setShowFavorites(filters.showFavorites);
+  };
+
+  const showPuppies = showFavorites
+    ? puppiesInfo.filter((puppy) => favorites.includes(puppy.id))
+    : puppiesInfo;
+
   return (
     <>
-      <PaginationBar prev={props.prev} next={props.next} />
+      <PaginationBar
+        prev={props.prev}
+        next={props.next}
+        filters={handleApplyFilters}
+      />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
       <div className="wrapper">
         <div className="puppies-grid">
-          {puppiesInfo.map((puppy, index) => (
+          {showPuppies.map((puppy, index) => (
             <PuppiesCard
               key={index}
               puppy={puppy}
@@ -42,7 +56,11 @@ export const Puppies = (props: IProps) => {
           ))}
         </div>
       </div>
-      <PaginationBar prev={props.prev} next={props.next} />
+      <PaginationBar
+        prev={props.prev}
+        next={props.next}
+        filters={handleApplyFilters}
+      />
     </>
   );
 };
