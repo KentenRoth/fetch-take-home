@@ -5,9 +5,11 @@ interface IProps {
   puppy: Dog;
 }
 
+// heart fill #eb5e28
+
 export const PuppiesCard = (props: IProps) => {
   const { puppy } = props;
-  let fill = "#eb5e28";
+  let fill = "#d9d6d1";
 
   return (
     <div className="puppy-card">

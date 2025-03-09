@@ -1,0 +1,26 @@
+@use '../abstracts/all' as *
+    
+.pagination-bar
+    background: $light-gray
+    color: $font-color
+    width: 100%
+    padding: 30px
+    margin-bottom: 50px
+    &_wrapper
+        max-width: 1700px
+        margin: auto
+        display: flex
+        justify-content: flex-end
+        align-items: center
+        gap: 20px
+        .pagination-bar_filter
+            margin-right: auto
+            button
+                border: 2px solid $accent
+                background: $light-gray
+                color: $dark-gray
+                transition: 300ms ease-in-out
+                &:hover
+                    background: $accent
+                    color: $background
+                    transition: 300ms ease-in-out

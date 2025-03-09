@@ -1,0 +1,43 @@
+@use '../abstracts/all' as *
+
+.breed-modal
+    position: absolute
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background: rgba(0, 0, 0, 0.7)
+    display: flex
+    justify-content: center
+    align-items: center
+    z-index: 10
+    pointer-events: auto
+    &_wrapper
+        position: relative
+        width: 900px
+        background: $background
+        padding: 40px
+        border-radius: 10px
+        display: flex
+        flex-direction: column
+        gap: 20px
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.5)
+        .breed-modal_header
+            display: inline-flex
+            justify-content: space-between
+            align-items: center
+            .close
+                position: absolute
+                color: $accent
+                font-size: 24px
+                right: 20px
+                top: 15px
+                cursor: pointer
+                background: transparent
+                padding: 0
+        form
+            display: flex
+            gap: 30px
+            width: 100%
+            .react-select-container
+                flex-grow: 1

@@ -13,7 +13,7 @@ export const HeartIcon: React.FC<HeartIconProps> = ({ fill }) => {
     >
       <path
         d="M12 21s-6.5-4.5-9.5-8C-.5 9 1 4.5 5 3c2.3-.9 4.9 0 7 2 2.1-2 4.7-2.9 7-2 4 1.5 5.5 6 2.5 10-3 3.5-9.5 8-9.5 8z"
-        stroke="#eb5e28"
+        stroke="#ef703e"
         strokeWidth="1.2"
         strokeLinejoin="round"
       />

@@ -1,4 +1,5 @@
 import { usePuppiesInfo } from "../../hooks/usePuppiesInfo";
+import { PaginationBar } from "../PaginationBar";
 import { PuppiesCard } from "./PuppiesCard";
 
 interface IProps {
@@ -15,6 +16,7 @@ export const Puppies = (props: IProps) => {
   return (
     <>
       <h1>Puppies Grid</h1>
+      <PaginationBar />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
       <div className="puppies-grid">
@@ -22,6 +24,7 @@ export const Puppies = (props: IProps) => {
           <PuppiesCard key={index} puppy={puppy} />
         ))}
       </div>
+      <PaginationBar />
     </>
   );
 };

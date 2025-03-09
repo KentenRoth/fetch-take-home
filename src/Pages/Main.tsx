@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BreedModal } from "../Modal/breedModal";
 import { Puppies } from "../Components/Puppies/Puppies";
 import { useBreeds } from "../hooks/useBreeds";
@@ -22,9 +22,17 @@ export const Main = () => {
     setSelectedBreeds(breed);
   };
 
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [showModal]);
+
   return (
     <>
-      <div>
+      <div className="main">
         <h2>Selected Breeds</h2>
         <ul>
           {selectedBreeds.map((breed, index) => (
