@@ -9,13 +9,33 @@ export const Main = () => {
   const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(true);
+  const [minAge, setMinAge] = useState<number>();
+  const [maxAge, setMaxAge] = useState<number>();
+  const [sort, setSort] = useState<string>("");
+
+  const handleApplyFilters = (filters: {
+    minAge: number;
+    maxAge: number;
+    sort: string;
+  }) => {
+    setMinAge(filters.minAge);
+    setMaxAge(filters.maxAge);
+    setSort(filters.sort);
+  };
+
+  const filters = {
+    ageMin: minAge,
+    ageMax: maxAge,
+    sort: sort,
+  };
+
   const {
     puppies,
     nextPage,
     prevPage,
     loading: puppiesLoading,
     error: puppiesError,
-  } = usePuppies(selectedBreeds);
+  } = usePuppies(selectedBreeds, filters);
 
   const handleShowModal = () => {
     setShowModal(!showModal);
@@ -61,7 +81,13 @@ export const Main = () => {
           />
         )}
         {selectedBreeds.length > 0 ? (
-          <Puppies pups={puppies} prev={prevPage} next={nextPage} />
+          <Puppies
+            pups={puppies}
+            prev={prevPage}
+            next={nextPage}
+            filters={handleApplyFilters}
+            currentFilters={{ minAge, maxAge, sort }}
+          />
         ) : (
           <div className="wrapper">
             <h2>Please select your favorite breeds</h2>

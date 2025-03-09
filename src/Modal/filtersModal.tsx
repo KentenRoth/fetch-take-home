@@ -6,33 +6,39 @@ interface IProps {
     showFavorites: boolean;
     minAge: number;
     maxAge: number;
-    breedOrder: string;
-    ageOrder: string;
+    sort: string;
   }) => void;
   currentFilters: {
     showFavorites: boolean;
     minAge: number;
     maxAge: number;
-    breedOrder: string;
-    ageOrder: string;
+    sort: string;
   };
+  favorite: (filters: { showFavorites: boolean }) => void;
 }
 
 export const FiltersModal = (props: IProps) => {
   const { show, filters, currentFilters } = props;
+
   const [showFavorites, setShowFavorites] = useState<boolean>(
     currentFilters.showFavorites
   );
   const [minAge, setMinAge] = useState<number>(currentFilters.minAge);
   const [maxAge, setMaxAge] = useState<number>(currentFilters.maxAge);
-  const [breedOrder, setBreedOrder] = useState<string>(
-    currentFilters.breedOrder
+
+  const [sortCategory, setSortCategory] = useState<string>(
+    currentFilters.sort.split(":")[0] || "breed"
   );
-  const [ageOrder, setAgeOrder] = useState<string>(currentFilters.ageOrder);
+  const [sortOrder, setSortOrder] = useState<string>(
+    currentFilters.sort.split(":")[1] || "asc"
+  );
 
   useEffect(() => {
     setShowFavorites(props.currentFilters.showFavorites);
-  }, [props.currentFilters.showFavorites]);
+    const [category, order] = props.currentFilters.sort.split(":");
+    setSortCategory(category || "breed");
+    setSortOrder(order || "asc");
+  }, [props.currentFilters]);
 
   const handleShowFavorites = () => {
     setShowFavorites(!showFavorites);
@@ -40,7 +46,10 @@ export const FiltersModal = (props: IProps) => {
 
   const handleApplyFilters = (e: React.FormEvent) => {
     e.preventDefault();
-    filters({ showFavorites, minAge, maxAge, breedOrder, ageOrder });
+
+    const sort = `${sortCategory}:${sortOrder}`;
+
+    filters({ showFavorites, minAge, maxAge, sort });
     show();
   };
 
@@ -65,15 +74,7 @@ export const FiltersModal = (props: IProps) => {
                 Show Favorites
               </label>
             </div>
-            <div className="breed-filter">
-              <label>
-                Breed Order
-                <input type="radio" name="breedOrder" value="asc" />
-                Asc
-                <input type="radio" name="breedOrder" value="desc" />
-                Desc
-              </label>
-            </div>
+
             <div className="age-filter">
               <label>
                 Min Age
@@ -93,14 +94,66 @@ export const FiltersModal = (props: IProps) => {
                   onChange={(e) => setMaxAge(Number(e.target.value))}
                 />
               </label>
-              <label>
-                Breed Order
-                <input type="radio" name="ageOrder" value="asc" />
-                Asc
-                <input type="radio" name="ageOrder" value="desc" />
-                Desc
-              </label>
             </div>
+
+            <div className="sort-category">
+              <label>Sort By</label>
+              <div>
+                <input
+                  type="radio"
+                  name="sortCategory"
+                  value="breed"
+                  checked={sortCategory === "breed"}
+                  onChange={() => setSortCategory("breed")}
+                />
+                Breed
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="sortCategory"
+                  value="age"
+                  checked={sortCategory === "age"}
+                  onChange={() => setSortCategory("age")}
+                />
+                Age
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="sortCategory"
+                  value="name"
+                  checked={sortCategory === "name"}
+                  onChange={() => setSortCategory("name")}
+                />
+                Name
+              </div>
+            </div>
+
+            <div className="sort-order">
+              <label>Sort Order</label>
+              <div>
+                <input
+                  type="radio"
+                  name="sortOrder"
+                  value="asc"
+                  checked={sortOrder === "asc"}
+                  onChange={() => setSortOrder("asc")}
+                />
+                Ascending
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="sortOrder"
+                  value="desc"
+                  checked={sortOrder === "desc"}
+                  onChange={() => setSortOrder("desc")}
+                />
+                Descending
+              </div>
+            </div>
+
             <button className="filters-submit" type="submit">
               Apply Filters
             </button>

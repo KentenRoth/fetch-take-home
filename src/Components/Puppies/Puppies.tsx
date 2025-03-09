@@ -7,16 +7,20 @@ interface IProps {
   pups: string[];
   prev: () => void;
   next: () => void;
+  filters: (filters: { minAge: number; maxAge: number; sort: string }) => void;
+  currentFilters: {
+    minAge: number;
+    maxAge: number;
+    sort: string;
+  };
 }
 
 export const Puppies = (props: IProps) => {
+  const filters = props.filters;
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
-  const [minAge, setMinAge] = useState<number>(0);
-  const [maxAge, setMaxAge] = useState<number>(100);
-  const [breedOrder, setBreedOrder] = useState<string>("asc");
-  const [ageOrder, setAgeOrder] = useState<string>("asc");
 
+  const { minAge, maxAge, sort } = props.currentFilters;
   const puppyIds = showFavorites ? favorites : props.pups;
 
   const {
@@ -33,18 +37,8 @@ export const Puppies = (props: IProps) => {
     }
   };
 
-  const handleApplyFilters = (filters: {
-    showFavorites: boolean;
-    minAge: number;
-    maxAge: number;
-    breedOrder: string;
-    ageOrder: string;
-  }) => {
+  const handleFavorite = (filters: { showFavorites: boolean }) => {
     setShowFavorites(filters.showFavorites);
-    setMinAge(filters.minAge);
-    setMaxAge(filters.maxAge);
-    setBreedOrder(filters.breedOrder);
-    setAgeOrder(filters.ageOrder);
   };
 
   return (
@@ -52,8 +46,9 @@ export const Puppies = (props: IProps) => {
       <PaginationBar
         prev={props.prev}
         next={props.next}
-        filters={handleApplyFilters}
-        currentFilters={{ showFavorites, minAge, maxAge, breedOrder, ageOrder }}
+        filters={filters}
+        favorite={handleFavorite}
+        currentFilters={{ showFavorites, minAge, maxAge, sort }}
       />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
@@ -72,8 +67,9 @@ export const Puppies = (props: IProps) => {
       <PaginationBar
         prev={props.prev}
         next={props.next}
-        filters={handleApplyFilters}
-        currentFilters={{ showFavorites, minAge, maxAge, breedOrder, ageOrder }}
+        filters={filters}
+        favorite={handleFavorite}
+        currentFilters={{ showFavorites, minAge, maxAge, sort }}
       />
     </>
   );

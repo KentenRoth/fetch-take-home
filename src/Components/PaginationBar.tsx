@@ -8,20 +8,19 @@ interface IProps {
     showFavorites: boolean;
     minAge: number;
     maxAge: number;
-    breedOrder: string;
-    ageOrder: string;
+    sort: string;
   }) => void;
   currentFilters: {
     showFavorites: boolean;
     minAge: number;
     maxAge: number;
-    breedOrder: string;
-    ageOrder: string;
+    sort: string;
   };
+  favorite: (filters: { showFavorites: boolean }) => void;
 }
 
 export const PaginationBar = (props: IProps) => {
-  const { next, prev, filters, currentFilters } = props;
+  const { next, prev, filters, currentFilters, favorite } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const handleFilters = () => {
@@ -47,6 +46,7 @@ export const PaginationBar = (props: IProps) => {
                 show={handleFilters}
                 filters={filters}
                 currentFilters={currentFilters}
+                favorite={favorite}
               />
             )}
           </div>
