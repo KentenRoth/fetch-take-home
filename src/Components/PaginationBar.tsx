@@ -4,8 +4,20 @@ import { FiltersModal } from "../Modal/filtersModal";
 interface IProps {
   next: () => void;
   prev: () => void;
-  filters: (filters: { showFavorites: boolean }) => void;
-  currentFilters: { showFavorites: boolean };
+  filters: (filters: {
+    showFavorites: boolean;
+    minAge: number;
+    maxAge: number;
+    breedOrder: string;
+    ageOrder: string;
+  }) => void;
+  currentFilters: {
+    showFavorites: boolean;
+    minAge: number;
+    maxAge: number;
+    breedOrder: string;
+    ageOrder: string;
+  };
 }
 
 export const PaginationBar = (props: IProps) => {

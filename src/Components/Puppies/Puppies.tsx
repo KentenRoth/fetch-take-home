@@ -12,12 +12,18 @@ interface IProps {
 export const Puppies = (props: IProps) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const [minAge, setMinAge] = useState<number>(0);
+  const [maxAge, setMaxAge] = useState<number>(100);
+  const [breedOrder, setBreedOrder] = useState<string>("asc");
+  const [ageOrder, setAgeOrder] = useState<string>("asc");
+
+  const puppyIds = showFavorites ? favorites : props.pups;
 
   const {
     puppiesInfo,
     loading: puppiesInfoLoading,
     error: puppiesInfoError,
-  } = usePuppiesInfo(props.pups);
+  } = usePuppiesInfo(puppyIds);
 
   const favoritesList = (puppy: string) => {
     if (favorites.includes(puppy)) {
@@ -27,13 +33,19 @@ export const Puppies = (props: IProps) => {
     }
   };
 
-  const handleApplyFilters = (filters: { showFavorites: boolean }) => {
+  const handleApplyFilters = (filters: {
+    showFavorites: boolean;
+    minAge: number;
+    maxAge: number;
+    breedOrder: string;
+    ageOrder: string;
+  }) => {
     setShowFavorites(filters.showFavorites);
+    setMinAge(filters.minAge);
+    setMaxAge(filters.maxAge);
+    setBreedOrder(filters.breedOrder);
+    setAgeOrder(filters.ageOrder);
   };
-
-  const showPuppies = showFavorites
-    ? puppiesInfo.filter((puppy) => favorites.includes(puppy.id))
-    : puppiesInfo;
 
   return (
     <>
@@ -41,13 +53,13 @@ export const Puppies = (props: IProps) => {
         prev={props.prev}
         next={props.next}
         filters={handleApplyFilters}
-        currentFilters={{ showFavorites }}
+        currentFilters={{ showFavorites, minAge, maxAge, breedOrder, ageOrder }}
       />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
       <div className="wrapper">
         <div className="puppies-grid">
-          {showPuppies.map((puppy, index) => (
+          {puppiesInfo.map((puppy, index) => (
             <PuppiesCard
               key={index}
               puppy={puppy}
@@ -61,7 +73,7 @@ export const Puppies = (props: IProps) => {
         prev={props.prev}
         next={props.next}
         filters={handleApplyFilters}
-        currentFilters={{ showFavorites }}
+        currentFilters={{ showFavorites, minAge, maxAge, breedOrder, ageOrder }}
       />
     </>
   );
