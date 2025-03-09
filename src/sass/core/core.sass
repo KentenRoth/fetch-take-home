@@ -16,7 +16,7 @@ body
     color: $font-color
 
 button
-    background: $accent-purple
+    background: $accent
     color: $background
     border: none
     padding: 10px 30px
@@ -27,8 +27,12 @@ button
     font-size: 16px
     &:hover
         transition: 300ms ease-in-out
-        background: darken($accent-purple, 10%)
+        background: darken($accent, 10%)
 
 h2
-    font-size: clamp(1.5rem, 0.875rem + 2vw, 3rem);
-    line-height: clamp(2.125rem, 1.5rem + 2vw, 3.625rem);
+    font-size: clamp(1.5rem, 0.875rem + 2vw, 3rem)
+    line-height: clamp(2.525rem, 1.5rem + 2vw, 3.625rem)
+
+h3
+    font-size: clamp(1.5625rem, 1.3021rem + 0.8333vw, 2.1875rem)
+    line-height: clamp(2.1875rem, 1.9271rem + 0.8333vw, 2.8125rem);

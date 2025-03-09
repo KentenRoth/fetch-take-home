@@ -1,7 +1,23 @@
+@use '../abstracts/all' as *
+
 .puppy-card
-    background: gray
+    background: $light-gray
     border-radius: 10px
     overflow: hidden
+    position: relative
+    &_heart
+        position: absolute
+        top: 5px
+        right: 10px
+    &_age
+        padding: 10px
+        background: $accent
+        padding: 10px 15px
+        position: absolute
+        top: 0
+        left: 0
+        border-bottom-right-radius: 5px
+        z-index: 2
     &:hover
         img
             transform: scale(1.1)
@@ -15,3 +31,11 @@
             width: 100%
             object-fit: cover
             transition: 300ms ease-in-out
+    &_info
+        padding: 10px 15px 
+        h3
+            font-size: 1.8rem
+            margin: 0
+        p
+            font-size: 1.2rem
+            margin: 0
