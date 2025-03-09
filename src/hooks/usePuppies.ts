@@ -7,13 +7,13 @@ export const usePuppies = (selectedBreeds: string[]) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const breedsQuery = selectedBreeds
+      .map((breed) => `breeds=${breed}`)
+      .join("&");
     axios
-      .get(
-        `/dogs/search?${selectedBreeds.map(
-          (breed) => `breeds=${breed}`
-        )}&size=16`
-      )
+      .get(`/dogs/search?${breedsQuery}&size=16`)
       .then((res) => {
+        console.log(res);
         setPuppies(res.data.resultIds);
         setLoading(false);
       })
