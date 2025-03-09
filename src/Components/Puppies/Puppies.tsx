@@ -41,6 +41,7 @@ export const Puppies = (props: IProps) => {
         prev={props.prev}
         next={props.next}
         filters={handleApplyFilters}
+        currentFilters={{ showFavorites }}
       />
       {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
       {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
@@ -60,6 +61,7 @@ export const Puppies = (props: IProps) => {
         prev={props.prev}
         next={props.next}
         filters={handleApplyFilters}
+        currentFilters={{ showFavorites }}
       />
     </>
   );

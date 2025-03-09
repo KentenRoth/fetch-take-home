@@ -5,10 +5,11 @@ interface IProps {
   next: () => void;
   prev: () => void;
   filters: (filters: { showFavorites: boolean }) => void;
+  currentFilters: { showFavorites: boolean };
 }
 
 export const PaginationBar = (props: IProps) => {
-  const { next, prev, filters } = props;
+  const { next, prev, filters, currentFilters } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const handleFilters = () => {
@@ -30,7 +31,11 @@ export const PaginationBar = (props: IProps) => {
           <div className="pagination-bar_filter">
             <button onClick={handleFilters}>Filter</button>
             {showFilters && (
-              <FiltersModal show={handleFilters} filters={filters} />
+              <FiltersModal
+                show={handleFilters}
+                filters={filters}
+                currentFilters={currentFilters}
+              />
             )}
           </div>
           <button onClick={prev}>Prev</button>
