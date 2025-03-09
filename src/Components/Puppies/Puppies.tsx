@@ -34,7 +34,6 @@ export const Puppies = (props: IProps) => {
   } = usePuppiesInfo(puppyIds);
 
   const favoritesList = (puppy: string) => {
-    console.log(favorites);
     if (favorites.includes(puppy)) {
       setFavorites(favorites.filter((fav) => fav !== puppy));
     } else {
@@ -53,7 +52,7 @@ export const Puppies = (props: IProps) => {
         next={props.next}
         filters={filters}
         favorite={handleFavorite}
-        currentFilters={{ showFavorites, minAge, maxAge, sort }}
+        currentFilters={{ minAge, maxAge, sort }}
       />
       <div className="wrapper">
         {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
@@ -74,7 +73,7 @@ export const Puppies = (props: IProps) => {
         next={props.next}
         filters={filters}
         favorite={handleFavorite}
-        currentFilters={{ showFavorites, minAge, maxAge, sort }}
+        currentFilters={{ minAge, maxAge, sort }}
       />
     </>
   );

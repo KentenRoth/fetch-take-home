@@ -5,13 +5,11 @@ interface IProps {
   next: () => void;
   prev: () => void;
   filters: (filters: {
-    showFavorites: boolean;
     minAge: number | undefined;
     maxAge: number | undefined;
     sort: string;
   }) => void;
   currentFilters: {
-    showFavorites: boolean;
     minAge: number | undefined;
     maxAge: number | undefined;
     sort: string;
