@@ -3,16 +3,18 @@ import { HeartIcon } from "../HeartIcon";
 
 interface IProps {
   puppy: Dog;
+  toggleFavorites: (puppy: string) => void;
+  isFavorite: boolean;
 }
 
 // heart fill #eb5e28
 
 export const PuppiesCard = (props: IProps) => {
-  const { puppy } = props;
-  let fill = "#d9d6d1";
+  const { puppy, toggleFavorites, isFavorite } = props;
+  const fill = isFavorite ? "#eb5e28" : "#d9d6d1";
 
   return (
-    <div className="puppy-card">
+    <div className="puppy-card" onClick={() => toggleFavorites(puppy.id)}>
       <div className="puppy-card_heart">
         <HeartIcon fill={fill} />
       </div>
