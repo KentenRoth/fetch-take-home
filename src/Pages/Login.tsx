@@ -29,7 +29,7 @@ export const Login = () => {
     <>
       <div className="login">
         <div className="login_wrapper">
-          <h1>Logging in</h1>
+          <h2>Log In</h2>
           <form onSubmit={onSubmit}>
             <input
               type="text"
@@ -43,7 +43,7 @@ export const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit">Login</button>
+            <button type="submit">Find My Puppy</button>
           </form>
         </div>
       </div>

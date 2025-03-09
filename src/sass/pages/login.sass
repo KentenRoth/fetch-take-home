@@ -1,0 +1,33 @@
+@use '../abstracts/all' as *
+
+.login
+    position: relative
+    width: 100vw
+    height: 100vh
+    background: rgba(0, 0, 0, 0.7)
+    display: flex
+    justify-content: center
+    align-items: center
+    &_wrapper
+        position: relative
+        width: 600px
+        background: $background
+        padding: 40px
+        border-radius: 10px
+        display: flex
+        flex-direction: column
+        gap: 20px
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.5)
+        text-align: center
+        form
+            display: flex
+            flex-direction: column
+            gap: 20px
+            input
+                padding: 10px
+                backgorund: $light-gray
+                color: $font-color
+                border: none
+                border-radius: 5px
+                font-size: 18px
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3)
