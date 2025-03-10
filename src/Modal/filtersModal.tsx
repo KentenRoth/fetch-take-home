@@ -1,17 +1,10 @@
 import { useState, useEffect } from "react";
+import { Filters } from "../types";
 
 interface IProps {
   show: () => void;
-  filters: (filters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  }) => void;
-  currentFilters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  };
+  filters: (filters: Filters) => void;
+  currentFilters: Filters;
   favorite: (filters: { showFavorites: boolean }) => void;
 }
 

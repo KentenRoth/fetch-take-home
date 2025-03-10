@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import { FiltersModal } from "../Modal/filtersModal";
+import { Filters } from "../types";
 
 interface IProps {
   next: () => void;
   prev: () => void;
-  filters: (filters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  }) => void;
-  currentFilters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  };
+  filters: (filters: Filters) => void;
+  currentFilters: Filters;
   favorite: (filters: { showFavorites: boolean }) => void;
+  hasFavorites: boolean;
+  getPuppy: () => void;
 }
 
 export const PaginationBar = (props: IProps) => {
-  const { next, prev, filters, currentFilters, favorite } = props;
+  const {
+    next,
+    prev,
+    filters,
+    currentFilters,
+    favorite,
+    hasFavorites,
+    getPuppy,
+  } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const handleFilters = () => {
@@ -38,7 +41,12 @@ export const PaginationBar = (props: IProps) => {
       <div className="pagination-bar">
         <div className="pagination-bar_wrapper">
           <div className="pagination-bar_filter">
-            <button onClick={handleFilters}>Filter</button>
+            {hasFavorites && (
+              <button className="perfect-puppy" onClick={getPuppy}>
+                Your Perfect Puppy
+              </button>
+            )}
+            <button onClick={handleFilters}>Filters</button>
             {showFilters && (
               <FiltersModal
                 show={handleFilters}

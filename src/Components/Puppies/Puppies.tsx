@@ -1,22 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePuppiesInfo } from "../../hooks/usePuppiesInfo";
+import { useGetPuppy } from "../../hooks/useGetPuppy";
 import { PaginationBar } from "../PaginationBar";
 import { PuppiesCard } from "./PuppiesCard";
+import { Filters } from "../../types";
 
 interface IProps {
   pups: string[];
   prev: () => void;
   next: () => void;
-  filters: (filters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  }) => void;
-  currentFilters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  };
+  filters: (filters: Filters) => void;
+  currentFilters: Filters;
 }
 
 export const Puppies = (props: IProps) => {
@@ -33,6 +27,13 @@ export const Puppies = (props: IProps) => {
     error: puppiesInfoError,
   } = usePuppiesInfo(puppyIds);
 
+  const {
+    puppiesInfo: perfectPuppy,
+    loading: perfectPuppyLoading,
+    error: perfectPuppyError,
+    fetchPuppy,
+  } = useGetPuppy();
+
   const favoritesList = (puppy: string) => {
     if (favorites.includes(puppy)) {
       setFavorites(favorites.filter((fav) => fav !== puppy));
@@ -45,6 +46,22 @@ export const Puppies = (props: IProps) => {
     setShowFavorites(filters.showFavorites);
   };
 
+  const handleGetPuppy = () => {
+    fetchPuppy(favorites);
+  };
+
+  useEffect(() => {
+    if (perfectPuppyLoading) {
+      console.log("Finding your perfect puppy!");
+    }
+    if (perfectPuppyError) {
+      console.log(perfectPuppyError);
+    }
+    if (perfectPuppy) {
+      console.log("Perfect Puppy Data:", perfectPuppy);
+    }
+  }, [perfectPuppyLoading, perfectPuppyError, perfectPuppy]);
+
   return (
     <>
       <PaginationBar
@@ -53,6 +70,8 @@ export const Puppies = (props: IProps) => {
         filters={filters}
         favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
+        hasFavorites={favorites.length > 0}
+        getPuppy={handleGetPuppy}
       />
       <div className="wrapper">
         {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
@@ -74,6 +93,8 @@ export const Puppies = (props: IProps) => {
         filters={filters}
         favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
+        hasFavorites={favorites.length > 0}
+        getPuppy={handleGetPuppy}
       />
     </>
   );

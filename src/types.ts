@@ -6,3 +6,9 @@ export interface Dog {
   zip_code: string;
   breed: string;
 }
+
+export interface Filters {
+  minAge: number | undefined;
+  maxAge: number | undefined;
+  sort: string;
+}
