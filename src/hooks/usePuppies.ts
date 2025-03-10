@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "../axios/axios";
+import { useNavigate } from "react-router-dom";
 
 interface FilterOptions {
   ageMin?: number;
@@ -16,6 +17,7 @@ export const usePuppies = (
   const [prev, setPrev] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigator = useNavigate();
 
   const paginationPuppies = useCallback((url: string) => {
     setLoading(true);
@@ -28,6 +30,9 @@ export const usePuppies = (
         setLoading(false);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigator("/login");
+        }
         setError(error.message);
         setLoading(false);
       });
@@ -41,7 +46,7 @@ export const usePuppies = (
       setLoading(false);
       return;
     }
-    console.log(filters);
+
     const breedsQuery = selectedBreeds
       .map((breed) => `breeds=${breed}`)
       .join("&");
@@ -59,6 +64,9 @@ export const usePuppies = (
         setLoading(false);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          navigator("/login");
+        }
         setError(error.message);
         setLoading(false);
       });

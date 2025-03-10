@@ -13,11 +13,10 @@ export const useGetPuppy = () => {
 
     try {
       const res = await axios.post("/dogs/match", puppies);
-      console.log(res.data.match);
       const resPuppy = await axios.post("/dogs", [res.data.match]);
       setPuppiesInfo(resPuppy.data[0]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setLoading(false);
     }
