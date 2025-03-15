@@ -31,6 +31,9 @@ button
     &:hover
         transition: 300ms ease-in-out
         background: darken($accent, 10%)
+    &:disabled
+        opacity: 0.5
+        pointer-events: none
 
 h1
     font-size: clamp(1.5rem, 0.875rem + 2vw, 3rem)
