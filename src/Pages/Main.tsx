@@ -8,22 +8,8 @@ import { useData } from "../context/dataContext";
 export const Main = () => {
   const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
   const [showModal, setShowModal] = useState(true);
-  const [minAge, setMinAge] = useState<number | undefined>();
-  const [maxAge, setMaxAge] = useState<number | undefined>();
-  const [sort, setSort] = useState<string>("breed:asc");
 
-  const { selectedBreeds, setSelectedBreeds, puppies, prevPage, nextPage } =
-    useData();
-
-  const handleApplyFilters = (filters: {
-    minAge: number | undefined;
-    maxAge: number | undefined;
-    sort: string;
-  }) => {
-    setMinAge(filters.minAge);
-    setMaxAge(filters.maxAge);
-    setSort(filters.sort);
-  };
+  const { selectedBreeds, setSelectedBreeds } = useData();
 
   const handleShowModal = () => {
     setShowModal(!showModal);
@@ -69,10 +55,7 @@ export const Main = () => {
           />
         )}
         {selectedBreeds.length > 0 ? (
-          <Puppies
-            filters={handleApplyFilters}
-            currentFilters={{ minAge, maxAge, sort }}
-          />
+          <Puppies />
         ) : (
           <div className="wrapper">
             <h2>Please select your favorite breeds</h2>

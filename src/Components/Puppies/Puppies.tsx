@@ -1,22 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGetPuppy } from "../../hooks/useGetPuppy";
 import { PaginationBar } from "../PaginationBar";
 import { PuppiesCard } from "./PuppiesCard";
-import { Filters } from "../../types";
 import { useData } from "../../context/dataContext";
 
-interface IProps {
-  filters: (filters: Filters) => void;
-  currentFilters: Filters;
-}
-
-export const Puppies = (props: IProps) => {
-  const filters = props.filters;
+export const Puppies = () => {
   const { loading, error, puppiesInfo } = useData();
-
   const { favorites, setFavorites } = useData();
-
-  const { minAge, maxAge, sort } = props.currentFilters;
 
   const {
     puppiesInfo: perfectPuppy,
@@ -51,11 +41,7 @@ export const Puppies = (props: IProps) => {
 
   return (
     <>
-      <PaginationBar
-        filters={filters}
-        currentFilters={{ minAge, maxAge, sort }}
-        getPuppy={handleGetPuppy}
-      />
+      <PaginationBar getPuppy={handleGetPuppy} />
       <div className="wrapper">
         {loading && <h2>Finding You're Puppies!</h2>}
         {error && <h2>{error}</h2>}
@@ -70,11 +56,7 @@ export const Puppies = (props: IProps) => {
           ))}
         </div>
       </div>
-      <PaginationBar
-        filters={filters}
-        currentFilters={{ minAge, maxAge, sort }}
-        getPuppy={handleGetPuppy}
-      />
+      <PaginationBar getPuppy={handleGetPuppy} />
     </>
   );
 };

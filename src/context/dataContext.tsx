@@ -7,7 +7,7 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
-import { Dog } from "../types";
+import { Dog, Filters } from "../types";
 import { usePuppies } from "../hooks/usePuppies";
 import { usePuppiesInfo } from "../hooks/usePuppiesInfo";
 
@@ -21,6 +21,8 @@ interface DataContextType {
   favorites: string[];
   setFavorites: Dispatch<SetStateAction<string[]>>;
   setShowFavorites: Dispatch<SetStateAction<boolean>>;
+  filters: Filters;
+  setFilters: Dispatch<SetStateAction<Filters>>;
   showFavorites: boolean;
   next: string | null;
   prev: string | null;
@@ -44,15 +46,13 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [prev, setPrev] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [sort, setSort] = useState<string>("breed:asc");
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
-
-  const filters = {
+  const [filters, setFilters] = useState<Filters>({
     ageMin: 0,
     ageMax: 0,
-    sort: sort,
-  };
+    sort: "breed:asc",
+  });
 
   const {
     puppies: fetchedPuppies,
@@ -105,6 +105,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setFavorites,
         setShowFavorites,
         showFavorites,
+        filters,
+        setFilters,
         next,
         prev,
         loading,

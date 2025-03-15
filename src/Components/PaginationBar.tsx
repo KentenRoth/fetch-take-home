@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
 import { FiltersModal } from "../Modal/filtersModal";
-import { Filters } from "../types";
 import { useData } from "../context/dataContext";
 
 interface IProps {
-  filters: (filters: Filters) => void;
-  currentFilters: Filters;
   getPuppy: () => void;
 }
 
 export const PaginationBar = (props: IProps) => {
-  const { filters, currentFilters, getPuppy } = props;
+  const { getPuppy } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const { favorites, nextPage, prevPage, next, prev } = useData();
 
@@ -37,13 +34,7 @@ export const PaginationBar = (props: IProps) => {
               </button>
             )}
             <button onClick={handleFilters}>Filters</button>
-            {showFilters && (
-              <FiltersModal
-                show={handleFilters}
-                filters={filters}
-                currentFilters={currentFilters}
-              />
-            )}
+            {showFilters && <FiltersModal show={handleFilters} />}
           </div>
           <button onClick={prevPage} disabled={!prev}>
             Prev

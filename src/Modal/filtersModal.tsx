@@ -1,38 +1,28 @@
 import { useState, useEffect } from "react";
-import { Filters } from "../types";
 import { useData } from "../context/dataContext";
 
 interface IProps {
   show: () => void;
-  filters: (filters: Filters) => void;
-  currentFilters: Filters;
 }
 
 export const FiltersModal = (props: IProps) => {
-  const { show, filters, currentFilters } = props;
-  const [minAge, setMinAge] = useState<number | undefined>(
-    currentFilters?.minAge
-  );
-  const [maxAge, setMaxAge] = useState<number | undefined>(
-    currentFilters?.maxAge
-  );
+  const { show } = props;
+  const { showFavorites, setShowFavorites, filters, setFilters } = useData();
+  const [ageMin, setAgeMin] = useState<number | undefined>(filters?.ageMin);
+  const [ageMax, setAgeMax] = useState<number | undefined>(filters?.ageMax);
 
   const [sortCategory, setSortCategory] = useState<string>(
-    currentFilters.sort.split(":")[0] || "breed"
+    filters.sort.split(":")[0] || "breed"
   );
   const [sortOrder, setSortOrder] = useState<string>(
-    currentFilters.sort.split(":")[1] || "asc"
+    filters.sort.split(":")[1] || "asc"
   );
 
-  const { selectedBreeds, setSelectedBreeds, showFavorites, setShowFavorites } =
-    useData();
-
   useEffect(() => {
-    const [category, order] = props.currentFilters.sort.split(":");
+    const [category, order] = filters.sort.split(":");
     setSortCategory(category || "breed");
     setSortOrder(order || "asc");
-    console.log(selectedBreeds, "Filter");
-  }, [props.currentFilters]);
+  }, [filters.sort]);
 
   const handleShowFavorites = () => {
     setShowFavorites(!showFavorites);
@@ -41,7 +31,7 @@ export const FiltersModal = (props: IProps) => {
   const handleApplyFilters = (e: React.FormEvent) => {
     e.preventDefault();
     const sort = `${sortCategory}:${sortOrder}`;
-    filters({ minAge, maxAge, sort });
+    setFilters({ ageMin, ageMax, sort });
     show();
   };
 
@@ -73,8 +63,8 @@ export const FiltersModal = (props: IProps) => {
                 <input
                   type="number"
                   name="minAge"
-                  value={minAge}
-                  onChange={(e) => setMinAge(Number(e.target.value))}
+                  value={ageMin}
+                  onChange={(e) => setAgeMin(Number(e.target.value))}
                 />
               </label>
               <label>
@@ -82,8 +72,8 @@ export const FiltersModal = (props: IProps) => {
                 <input
                   type="number"
                   name="maxAge"
-                  value={maxAge}
-                  onChange={(e) => setMaxAge(Number(e.target.value))}
+                  value={ageMax}
+                  onChange={(e) => setAgeMax(Number(e.target.value))}
                 />
               </label>
             </div>

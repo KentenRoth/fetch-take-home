@@ -8,7 +8,7 @@ export interface Dog {
 }
 
 export interface Filters {
-  minAge: number | undefined;
-  maxAge: number | undefined;
+  ageMin: number | undefined;
+  ageMax: number | undefined;
   sort: string;
 }
