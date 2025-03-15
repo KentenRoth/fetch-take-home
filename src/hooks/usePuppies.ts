@@ -25,7 +25,13 @@ export const usePuppies = (
       .get(url)
       .then((res) => {
         setPuppies(res.data.resultIds);
-        setNext(res.data.next);
+        setNext(
+          res.data.next &&
+            parseInt(new URLSearchParams(res.data.next).get("from") || "0") >
+              res.data.total
+            ? null
+            : res.data.next
+        );
         setPrev(res.data.prev);
         setLoading(false);
       })
