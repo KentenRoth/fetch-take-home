@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { usePuppiesInfo } from "../../hooks/usePuppiesInfo";
 import { useGetPuppy } from "../../hooks/useGetPuppy";
 import { PaginationBar } from "../PaginationBar";
 import { PuppiesCard } from "./PuppiesCard";
@@ -13,12 +12,11 @@ interface IProps {
 
 export const Puppies = (props: IProps) => {
   const filters = props.filters;
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [showFavorites, setShowFavorites] = useState<boolean>(false);
   const { loading, error, puppiesInfo } = useData();
 
+  const { favorites, setFavorites } = useData();
+
   const { minAge, maxAge, sort } = props.currentFilters;
-  // const puppyIds = showFavorites ? favorites : props.pups;
 
   const {
     puppiesInfo: perfectPuppy,
@@ -33,10 +31,6 @@ export const Puppies = (props: IProps) => {
     } else {
       setFavorites([...favorites, puppy]);
     }
-  };
-
-  const handleFavorite = (filters: { showFavorites: boolean }) => {
-    setShowFavorites(filters.showFavorites);
   };
 
   const handleGetPuppy = () => {
@@ -59,9 +53,7 @@ export const Puppies = (props: IProps) => {
     <>
       <PaginationBar
         filters={filters}
-        favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
-        hasFavorites={favorites.length > 0}
         getPuppy={handleGetPuppy}
       />
       <div className="wrapper">
@@ -80,9 +72,7 @@ export const Puppies = (props: IProps) => {
       </div>
       <PaginationBar
         filters={filters}
-        favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
-        hasFavorites={favorites.length > 0}
         getPuppy={handleGetPuppy}
       />
     </>
