@@ -3,8 +3,6 @@ import { FiltersModal } from "../Modal/filtersModal";
 import { Filters } from "../types";
 
 interface IProps {
-  next: () => void;
-  prev: () => void;
   filters: (filters: Filters) => void;
   currentFilters: Filters;
   favorite: (filters: { showFavorites: boolean }) => void;
@@ -13,15 +11,7 @@ interface IProps {
 }
 
 export const PaginationBar = (props: IProps) => {
-  const {
-    next,
-    prev,
-    filters,
-    currentFilters,
-    favorite,
-    hasFavorites,
-    getPuppy,
-  } = props;
+  const { filters, currentFilters, favorite, hasFavorites, getPuppy } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const handleFilters = () => {
@@ -56,8 +46,8 @@ export const PaginationBar = (props: IProps) => {
               />
             )}
           </div>
-          <button onClick={prev}>Prev</button>
-          <button onClick={next}>Next</button>
+          {/* <button onClick={prev}>Prev</button>
+          <button onClick={next}>Next</button> */}
         </div>
       </div>
     </>

@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import { BreedModal } from "../Modal/breedModal";
 import { Puppies } from "../Components/Puppies/Puppies";
 import { useBreeds } from "../hooks/useBreeds";
-import { usePuppies } from "../hooks/usePuppies";
 import { BreedsList } from "../Components/BreedsList";
+import { useData } from "../context/dataContext";
 
 export const Main = () => {
   const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
-  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(true);
   const [minAge, setMinAge] = useState<number | undefined>();
   const [maxAge, setMaxAge] = useState<number | undefined>();
   const [sort, setSort] = useState<string>("breed:asc");
+
+  const { selectedBreeds, setSelectedBreeds, puppies, prevPage, nextPage } =
+    useData();
 
   const handleApplyFilters = (filters: {
     minAge: number | undefined;
@@ -22,20 +24,6 @@ export const Main = () => {
     setMaxAge(filters.maxAge);
     setSort(filters.sort);
   };
-
-  const filters = {
-    ageMin: minAge,
-    ageMax: maxAge,
-    sort: sort,
-  };
-
-  const {
-    puppies,
-    nextPage,
-    prevPage,
-    loading: puppiesLoading,
-    error: puppiesError,
-  } = usePuppies(selectedBreeds, filters);
 
   const handleShowModal = () => {
     setShowModal(!showModal);
@@ -82,9 +70,6 @@ export const Main = () => {
         )}
         {selectedBreeds.length > 0 ? (
           <Puppies
-            pups={puppies}
-            prev={prevPage}
-            next={nextPage}
             filters={handleApplyFilters}
             currentFilters={{ minAge, maxAge, sort }}
           />

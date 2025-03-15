@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Filters } from "../types";
+import { useData } from "../context/dataContext";
 
 interface IProps {
   show: () => void;
@@ -25,10 +26,13 @@ export const FiltersModal = (props: IProps) => {
     currentFilters.sort.split(":")[1] || "asc"
   );
 
+  const { selectedBreeds, setSelectedBreeds } = useData();
+
   useEffect(() => {
     const [category, order] = props.currentFilters.sort.split(":");
     setSortCategory(category || "breed");
     setSortOrder(order || "asc");
+    console.log(selectedBreeds, "Filter");
   }, [props.currentFilters]);
 
   const handleShowFavorites = () => {

@@ -4,11 +4,9 @@ import { useGetPuppy } from "../../hooks/useGetPuppy";
 import { PaginationBar } from "../PaginationBar";
 import { PuppiesCard } from "./PuppiesCard";
 import { Filters } from "../../types";
+import { useData } from "../../context/dataContext";
 
 interface IProps {
-  pups: string[];
-  prev: () => void;
-  next: () => void;
   filters: (filters: Filters) => void;
   currentFilters: Filters;
 }
@@ -17,15 +15,10 @@ export const Puppies = (props: IProps) => {
   const filters = props.filters;
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const { loading, error, puppiesInfo } = useData();
 
   const { minAge, maxAge, sort } = props.currentFilters;
-  const puppyIds = showFavorites ? favorites : props.pups;
-
-  const {
-    puppiesInfo,
-    loading: puppiesInfoLoading,
-    error: puppiesInfoError,
-  } = usePuppiesInfo(puppyIds);
+  // const puppyIds = showFavorites ? favorites : props.pups;
 
   const {
     puppiesInfo: perfectPuppy,
@@ -65,8 +58,6 @@ export const Puppies = (props: IProps) => {
   return (
     <>
       <PaginationBar
-        prev={props.prev}
-        next={props.next}
         filters={filters}
         favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
@@ -74,8 +65,8 @@ export const Puppies = (props: IProps) => {
         getPuppy={handleGetPuppy}
       />
       <div className="wrapper">
-        {puppiesInfoLoading && <h2>Finding You're Puppies!</h2>}
-        {puppiesInfoError && <h2>{puppiesInfoError}</h2>}
+        {loading && <h2>Finding You're Puppies!</h2>}
+        {error && <h2>{error}</h2>}
         <div className="puppies-grid">
           {puppiesInfo.map((puppy, index) => (
             <PuppiesCard
@@ -88,8 +79,6 @@ export const Puppies = (props: IProps) => {
         </div>
       </div>
       <PaginationBar
-        prev={props.prev}
-        next={props.next}
         filters={filters}
         favorite={handleFavorite}
         currentFilters={{ minAge, maxAge, sort }}
