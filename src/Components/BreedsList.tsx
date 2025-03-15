@@ -1,23 +1,26 @@
-interface IProps {
-  breeds: string[];
-  removeBreed: (breed: string) => void;
-}
+import { useData } from "../context/dataContext";
 
-export const BreedsList = (props: IProps) => {
+export const BreedsList = () => {
+  const { selectedBreeds, setSelectedBreeds } = useData();
+
+  const removeBreed = (breed: string) => {
+    setSelectedBreeds(selectedBreeds.filter((b) => b !== breed));
+  };
+
   return (
     <div className="breeds-list">
-      {props.breeds.length === 0 ? (
+      {selectedBreeds.length === 0 ? (
         ""
       ) : (
         <>
           <h3 className="breeds-list_heading">Current Breed Selection</h3>
           <ul className="breeds-list">
-            {props.breeds.map((breed, index) => (
+            {selectedBreeds.map((breed, index) => (
               <li key={index}>
                 {breed}
                 <button
                   className="breeds-list_button"
-                  onClick={() => props.removeBreed(breed)}
+                  onClick={() => removeBreed(breed)}
                 >
                   X
                 </button>

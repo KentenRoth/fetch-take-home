@@ -19,10 +19,6 @@ export const Main = () => {
     setSelectedBreeds(breed);
   };
 
-  const removeBreed = (breed: string) => {
-    setSelectedBreeds(selectedBreeds.filter((b) => b !== breed));
-  };
-
   useEffect(() => {
     if (showModal) {
       document.body.classList.add("no-scroll");
@@ -41,7 +37,7 @@ export const Main = () => {
               <button onClick={handleShowModal}>Search Breeds</button>
             </div>
             <div className="main_heading__breeds">
-              <BreedsList breeds={selectedBreeds} removeBreed={removeBreed} />
+              <BreedsList />
             </div>
           </div>
         </div>
