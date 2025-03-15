@@ -18,6 +18,10 @@ interface DataContextType {
   setPuppies: Dispatch<SetStateAction<string[]>>;
   puppiesInfo: Dog[];
   setPuppiesInfo: Dispatch<SetStateAction<Dog[]>>;
+  favorites: string[];
+  setFavorites: Dispatch<SetStateAction<string[]>>;
+  setShowFavorites: Dispatch<SetStateAction<boolean>>;
+  showFavorites: boolean;
   next: string | null;
   prev: string | null;
   loading: boolean;
@@ -41,6 +45,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [sort, setSort] = useState<string>("breed:asc");
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
   const filters = {
     ageMin: 0,
@@ -54,15 +60,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     prev: prevUrl,
     loading: puppiesLoading,
     error: puppiesError,
-    nextPage,
-    prevPage,
+    nextPage: fetchNextPage,
+    prevPage: fetchPrevPage,
   } = usePuppies(selectedBreeds, filters);
 
   const {
     puppiesInfo: fetchedPuppiesInfo,
     loading: puppiesInfoLoading,
     error: puppiesInfoError,
-  } = usePuppiesInfo(fetchedPuppies);
+  } = usePuppiesInfo(showFavorites ? favorites : fetchedPuppies);
 
   useEffect(() => {
     setPuppies(fetchedPuppies);
@@ -74,7 +80,17 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
   useEffect(() => {
     setPuppiesInfo(fetchedPuppiesInfo);
+    setLoading(puppiesInfoLoading);
+    setError(puppiesInfoError);
   }, [fetchedPuppiesInfo]);
+
+  const nextPage = () => {
+    fetchNextPage();
+  };
+
+  const prevPage = () => {
+    fetchPrevPage();
+  };
 
   return (
     <DataContext.Provider
@@ -85,6 +101,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setPuppies,
         puppiesInfo,
         setPuppiesInfo,
+        favorites,
+        setFavorites,
+        setShowFavorites,
+        showFavorites,
         next,
         prev,
         loading,

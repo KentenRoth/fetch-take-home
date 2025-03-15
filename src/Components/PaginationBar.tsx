@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { FiltersModal } from "../Modal/filtersModal";
 import { Filters } from "../types";
+import { useData } from "../context/dataContext";
 
 interface IProps {
   filters: (filters: Filters) => void;
   currentFilters: Filters;
-  favorite: (filters: { showFavorites: boolean }) => void;
-  hasFavorites: boolean;
   getPuppy: () => void;
 }
 
 export const PaginationBar = (props: IProps) => {
-  const { filters, currentFilters, favorite, hasFavorites, getPuppy } = props;
+  const { filters, currentFilters, getPuppy } = props;
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  const { favorites, nextPage, prevPage, next, prev } = useData();
 
   const handleFilters = () => {
     setShowFilters(!showFilters);
@@ -31,7 +31,7 @@ export const PaginationBar = (props: IProps) => {
       <div className="pagination-bar">
         <div className="pagination-bar_wrapper">
           <div className="pagination-bar_filter">
-            {hasFavorites && (
+            {favorites.length > 0 && (
               <button className="perfect-puppy" onClick={getPuppy}>
                 Your Perfect Puppy
               </button>
@@ -42,12 +42,15 @@ export const PaginationBar = (props: IProps) => {
                 show={handleFilters}
                 filters={filters}
                 currentFilters={currentFilters}
-                favorite={favorite}
               />
             )}
           </div>
-          {/* <button onClick={prev}>Prev</button>
-          <button onClick={next}>Next</button> */}
+          <button onClick={prevPage} disabled={!prev}>
+            Prev
+          </button>
+          <button onClick={nextPage} disabled={!next}>
+            Next
+          </button>
         </div>
       </div>
     </>

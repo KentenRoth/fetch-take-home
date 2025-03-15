@@ -6,12 +6,10 @@ interface IProps {
   show: () => void;
   filters: (filters: Filters) => void;
   currentFilters: Filters;
-  favorite: (filters: { showFavorites: boolean }) => void;
 }
 
 export const FiltersModal = (props: IProps) => {
-  const { show, filters, currentFilters, favorite } = props;
-  const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const { show, filters, currentFilters } = props;
   const [minAge, setMinAge] = useState<number | undefined>(
     currentFilters?.minAge
   );
@@ -26,7 +24,8 @@ export const FiltersModal = (props: IProps) => {
     currentFilters.sort.split(":")[1] || "asc"
   );
 
-  const { selectedBreeds, setSelectedBreeds } = useData();
+  const { selectedBreeds, setSelectedBreeds, showFavorites, setShowFavorites } =
+    useData();
 
   useEffect(() => {
     const [category, order] = props.currentFilters.sort.split(":");
@@ -43,7 +42,6 @@ export const FiltersModal = (props: IProps) => {
     e.preventDefault();
     const sort = `${sortCategory}:${sortOrder}`;
     filters({ minAge, maxAge, sort });
-    favorite({ showFavorites });
     show();
   };
 
