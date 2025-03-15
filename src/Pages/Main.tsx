@@ -1,22 +1,16 @@
 import { useState, useEffect } from "react";
 import { BreedModal } from "../Modal/breedModal";
 import { Puppies } from "../Components/Puppies/Puppies";
-import { useBreeds } from "../hooks/useBreeds";
 import { BreedsList } from "../Components/BreedsList";
 import { useData } from "../context/dataContext";
 
 export const Main = () => {
-  const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
   const [showModal, setShowModal] = useState(true);
 
-  const { selectedBreeds, setSelectedBreeds } = useData();
+  const { selectedBreeds } = useData();
 
   const handleShowModal = () => {
     setShowModal(!showModal);
-  };
-
-  const handleSelectBreeds = (breed: string[]) => {
-    setSelectedBreeds(breed);
   };
 
   useEffect(() => {
@@ -42,14 +36,7 @@ export const Main = () => {
           </div>
         </div>
         <div className="main_heading"></div>
-        {showModal && (
-          <BreedModal
-            show={handleShowModal}
-            breed={breeds}
-            onSelectBreeds={handleSelectBreeds}
-            selectedBreeds={selectedBreeds}
-          />
-        )}
+        {showModal && <BreedModal show={handleShowModal} />}
         {selectedBreeds.length > 0 ? (
           <Puppies />
         ) : (

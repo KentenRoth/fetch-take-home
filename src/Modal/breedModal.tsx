@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useData } from "../context/dataContext";
+import { useBreeds } from "../hooks/useBreeds";
 import Select from "react-select";
 
 interface IProps {
-  breed: string[];
-  selectedBreeds: string[];
   show: () => void;
-  onSelectBreeds: (breed: string[]) => void;
 }
 
 export const BreedModal = (props: IProps) => {
-  const { breed, show, onSelectBreeds, selectedBreeds } = props;
-  const [selectedBreed, setSelectedBreed] = useState<string[]>(
-    selectedBreeds || []
-  );
+  const { show } = props;
+  const { breeds, loading: breedsLoading, error: breedsError } = useBreeds();
+  const [mySelectedBreeds, setMySelectedBreeds] = useState<string[]>([]);
+  const { selectedBreeds, setSelectedBreeds } = useData();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSelectBreeds(selectedBreed);
+    setSelectedBreeds(mySelectedBreeds);
     show();
   };
+
+  useEffect(() => {
+    if (selectedBreeds.length > 0) {
+      setMySelectedBreeds(selectedBreeds);
+    }
+  }, []);
 
   return (
     <>
@@ -37,11 +42,11 @@ export const BreedModal = (props: IProps) => {
               classNamePrefix={"react-select"}
               isMulti
               isSearchable
-              options={breed.map((breed) => ({ value: breed, label: breed }))}
+              options={breeds.map((breed) => ({ value: breed, label: breed }))}
               onChange={(selectedBreed) => {
-                setSelectedBreed(selectedBreed.map((breed) => breed.value));
+                setMySelectedBreeds(selectedBreed.map((breed) => breed.value));
               }}
-              value={selectedBreed.map((breed) => ({
+              value={mySelectedBreeds.map((breed: any) => ({
                 value: breed,
                 label: breed,
               }))}
